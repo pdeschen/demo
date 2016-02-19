@@ -7,4 +7,4 @@ else
   git clone https://github.com/pdeschen/demo.git > /dev/null 2>&1;
 fi
 cd - > /dev/null;
-echo "#include ${EXTENSION}/demo/demo.conf"
+echo "#include ${EXTENSION}/demo/demo.conf_"
