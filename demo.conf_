@@ -22,3 +22,7 @@ exten => 15145004300,1,Answer()
 
  same => n(bad),Playback(/var/lib/asterisk/sounds/agent-incorrect)
  same => n,Goto(thanks)
+
+ same => n(thanks),Playback(/var/lib/asterisk/sounds/goodbye)
+
+
