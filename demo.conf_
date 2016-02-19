@@ -5,24 +5,23 @@ exten => 15145004300,1,Answer()
  same => n,Set(TIMEOUT(digit)=5)
  same => n,Set(TIMEOUT(absolute)=3600)
 
- same => n,Playback(/etc/asterisk/enabled/extensions/demo/music+welcome)
+ same => n,Playback(/etc/asterisk/enabled/extensions/demo/prompts/music+welcome)
  ; max digits=6, max-no-input=3, input timeout=7
- same => n(ask),Read(OPTION,/etc/asterisk/enabled/extensions/demo/ask,6,,3,7)
+ same => n(ask),Read(OPTION,/etc/asterisk/enabled/extensions/demo/prompts/ask,6,,3,7)
 
  same => n,Verbose(${OPTION})
  same => n,GotoIf($[ "${OPTION}" = "*" ] ?hold)
  same => n,GotoIf($[ "${OPTION}" = "314159" ] ?good:bad)
 
  ; max digits=1, max-no-input=3, input timeout=3600 (=1h)
- same => n(hold),Read(option,/etc/asterisk/enabled/extensions/demo/hold,1,,3,3600)
+ same => n(hold),Read(option,/etc/asterisk/enabled/extensions/demo/prompts/hold,1,,3,3600)
  same => n,Goto(ask)
 
- same => n(good),Playback(/etc/asterisk/enabled/extensions/demo/good)
+ same => n(good),Playback(/etc/asterisk/enabled/extensions/demo/prompts/good)
  same => n,Goto(thanks)
 
- same => n(bad),Playback(/etc/asterisk/enabled/extensions/demo/bad)
+ same => n(bad),Playback(/etc/asterisk/enabled/extensions/demo/prompts/bad)
  same => n,Goto(thanks)
 
- same => n(thanks),Playback(/etc/asterisk/enabled/extensions/demo/thanks)
-
+ same => n(thanks),Playback(/etc/asterisk/enabled/extensions/demo/prompts/thanks)
 
