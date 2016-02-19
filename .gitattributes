@@ -1,0 +1,13 @@
+# Definition of a custom attribute that reverse binary attribute
+[attr]textfile text diff merge
+
+# Declare files as binary by default preventing potential problematic end-of-line conversion
+* binary
+
+# Declare files that will always have native line endings on checkout.
+*.md textfile
+
+# Declare files that will always have LF line endings on checkout.
+*.conf_ textfile eol=lf
+*.sh textfile eol=lf
+
