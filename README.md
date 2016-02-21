@@ -1,7 +1,10 @@
 ## Overview 
 
 Features both the Demo Application Dial Plan itself along with a convinient hot deploy
-facility.
+facility for the following DIDs
+
++ 15145004300
++ 15145004315 (senddtmf)
 
 ## Hot Deploy
 
