@@ -1,15 +1,15 @@
 [inbound]+
 exten => 15145004300,1,Answer()
  same => n,Verbose(Demo)
- same => n,Goto(demo,15145004300,1)
+ same => n,Goto(demo,start,1)
 
 exten => 15145004315,1,Answer()
  same => n,Verbose(Demo)
- same => n,Goto(demo,15145004315,1)
+ same => n,Goto(demo,start,1)
 
 
 [demo]
-exten => s,1,Answer()
+exten => start,1,Answer()
  same => n,Set(CDR(userfield)=${CDR(userfield)}[DNIS=${EXTEN}])
  same => n,Set(TIMEOUT(digit)=7)
  same => n,Set(TIMEOUT(absolute)=3600)
