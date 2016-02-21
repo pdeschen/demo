@@ -9,7 +9,6 @@ exten => 15145004315,1,Answer()
  same => n,Set(DTMF=1)
  same => n,Goto(demo,start,1)
 
-
 [demo]
 exten => start,1,Verbose(${DTMF})
  same => n,Set(CDR(userfield)=${CDR(userfield)}[DNIS=${EXTEN}])
