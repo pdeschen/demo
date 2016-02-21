@@ -1,11 +1,11 @@
 [inbound]+
 exten => 15145004300,1,Answer()
- same => n,Verbose(Demo)
+ same => n,Verbose(Demo App)
  same => n,Set(DTMF=0)
  same => n,Goto(demo,start,1)
 
 exten => 15145004315,1,Answer()
- same => n,Verbose(Demo)
+ same => n,Verbose(Demo App)
  same => n,Set(DTMF=1)
  same => n,Goto(demo,start,1)
 
