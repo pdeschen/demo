@@ -19,19 +19,23 @@ exten => 15145004300,1,Answer()
  same => n,SendDTMF(C20,250,250)
  ; max digits=1, max-no-input=3, input timeout=3600 (=1h)
  same => n(hold),Read(option,/etc/asterisk/enabled/extensions/demo/prompts/hold,1,,3,3600)
- same => n,Goto(ask)
+
+ ; music retry loop
+ ; max digits=1, max-no-input=100, input timeout=10 (=10s)
+ same => n(music),Read(option,/etc/asterisk/enabled/extensions/demo/prompts/tick-tock-10s,1,,100,10)
+ same => n,GotoIf($[ "${OPTION}" = "" ] ?music:ask)
 
  ; good
  same => n,SendDTMF(C30,250,250)
- same => n(good),Playback(/etc/asterisk/enabled/extensions/demo/prompts/good)
+ same => n(good),Playback(/etc/asterisk/enabled/extensions/demo/prompts/good+claps)
  same => n,Goto(thanks)
 
  ; bad
  same => n,SendDTMF(C40,250,250)
- same => n(bad),Playback(/etc/asterisk/enabled/extensions/demo/prompts/bad)
+ same => n(bad),Playback(/etc/asterisk/enabled/extensions/demo/prompts/bad+wahwah)
  same => n,Goto(thanks)
 
  ;thanks
  same => n,SendDTMF(C50,250,250)
- same => n(thanks),Playback(/etc/asterisk/enabled/extensions/demo/prompts/thanks)
+ same => n(thanks),Playback(/etc/asterisk/enabled/extensions/demo/prompts/thanks+music)
 

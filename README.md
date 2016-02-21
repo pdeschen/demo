@@ -24,3 +24,7 @@ dialplan context of choice.
 ## Credits
 
 + Intro Segment: https://www.freesound.org/people/abett/sounds/316997/
++ Wah-wah: https://www.freesound.org/people/Benboncan/sounds/73581/
++ Claps: https://www.freesound.org/people/qubodup/sounds/169943/
++ Tick-Tock: https://www.freesound.org/people/ultradust/sounds/167385/
+
