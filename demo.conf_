@@ -19,12 +19,12 @@ exten => 15145004300,1,Answer()
  same => n,SendDTMF(C20,250,250)
  ; max digits=1, max-no-input=3, input timeout=3600 (=1h)
  same => n,Set(TIMEOUT(digit)=0)
- same => n(hold),Read(option,/etc/asterisk/enabled/extensions/demo/prompts/hold,1,,1,0)
+ same => n(hold),Read(option,/etc/asterisk/enabled/extensions/demo/prompts/hold,1,,1,1)
 
  ; music retry loop
  ; max digits=1, max-no-input=100, input timeout=10 (=10s)
  same => n,Set(TIMEOUT(digit)=10)
- same => n(music),Read(option,/etc/asterisk/enabled/extensions/demo/prompts/tick-tock-10s,1,,100,5)
+ same => n(music),Read(option,/etc/asterisk/enabled/extensions/demo/prompts/tick-tock-10s,1,,100,1)
  same => n,GotoIf($[ "${OPTION}" = "" ] ?music:ask)
 
  ; good
