@@ -1,21 +1,23 @@
 [inbound]+
 exten => 15145004300,1,Answer()
  same => n,Verbose(Demo)
+ same => n,Set(DTMF=0)
  same => n,Goto(demo,start,1)
 
 exten => 15145004315,1,Answer()
  same => n,Verbose(Demo)
+ same => n,Set(DTMF=1)
  same => n,Goto(demo,start,1)
 
 
 [demo]
-exten => start,1,Answer()
+exten => start,1,Verbose(${DTMF})
  same => n,Set(CDR(userfield)=${CDR(userfield)}[DNIS=${EXTEN}])
  same => n,Set(TIMEOUT(digit)=7)
  same => n,Set(TIMEOUT(absolute)=3600)
  
  ; welcome
- same => n,ExecIf($[ "${EXTEN}" = "15145004300" ] ?SendDTMF(C10,250,250))
+ same => n,ExecIf($[ "${DTMF}" = "1" ] ?SendDTMF(C10,250,250))
  same => n,Playback(/etc/asterisk/enabled/extensions/demo/prompts/music+welcome)
  ; max digits=6, max-no-input=3, input timeout=7
  same => n(ask),Read(OPTION,/etc/asterisk/enabled/extensions/demo/prompts/ask,6,,3,7)
@@ -25,7 +27,7 @@ exten => start,1,Answer()
  same => n,GotoIf($[ "${OPTION}" = "314159" ] ?good:bad)
 
  ; hold
- same => n,ExecIf($[ "${EXTEN}" = "15145004300" ] ?SendDTMF(C20,250,250))
+ same => n,ExecIf($[ "${DTMF}" = "1" ] ?SendDTMF(C20,250,250))
  ; max digits=1, max-no-input=3, input timeout=3600 (=1h)
  same => n,Set(TIMEOUT(digit)=0)
  same => n(hold),Read(option,/etc/asterisk/enabled/extensions/demo/prompts/hold,1,,1,1)
@@ -37,16 +39,16 @@ exten => start,1,Answer()
  same => n,GotoIf($[ "${OPTION}" = "" ] ?music:ask)
 
  ; good
- same => n,ExecIf($[ "${EXTEN}" = "15145004300" ] ?SendDTMF(C30,250,250))
+ same => n,ExecIf($[ "${DTMF}" = "1" ] ?SendDTMF(C30,250,250))
  same => n(good),Playback(/etc/asterisk/enabled/extensions/demo/prompts/good+claps)
  same => n,Goto(thanks)
 
  ; bad
- same => n,ExecIf($[ "${EXTEN}" = "15145004300" ] ?SendDTMF(C40,250,250))
+ same => n,ExecIf($[ "${DTMF}" = "1" ] ?SendDTMF(C40,250,250))
  same => n(bad),Playback(/etc/asterisk/enabled/extensions/demo/prompts/bad+wahwah)
  same => n,Goto(thanks)
 
  ;thanks
- same => n,ExecIf($[ "${EXTEN}" = "15145004300" ] ?SendDTMF(C50,250,250))
+ same => n,ExecIf($[ "${DTMF}" = "1" ] ?SendDTMF(C50,250,250))
  same => n(thanks),Playback(/etc/asterisk/enabled/extensions/demo/prompts/thanks+music)
 
