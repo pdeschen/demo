@@ -14,22 +14,33 @@ exten => start,1,Verbose(${DTMF})
  same => n,Set(CDR(userfield)=${CDR(userfield)}[DNIS=${EXTEN}])
  same => n,Set(TIMEOUT(digit)=7)
  same => n,Set(TIMEOUT(absolute)=3600)
+
+;            hold  
+;             |              
+; welcome--> ask ---- goood---- ---> thanks
+;               \              /
+;                ----- bad ---
  
  ; welcome
- same => n,ExecIf($[ "${DTMF}" = "1" ] ?SendDTMF(C10,250,250))
+ same => n,ExecIf($[ "${DTMF}" = "1" ] ?SendDTMF(B,250,250))
  same => n,Playback(/etc/asterisk/enabled/extensions/demo/prompts/music+welcome)
+ same => n,ExecIf($[ "${DTMF}" = "1" ] ?SendDTMF(C00,250,250))
+
  ; max digits=6, max-no-input=3, input timeout=7
- same => n(ask),Read(OPTION,/etc/asterisk/enabled/extensions/demo/prompts/ask,6,,3,7)
+ same => n(ask),ExecIf($[ "${DTMF}" = "1" ] ?SendDTMF(B,250,250))
+ same => n,Read(OPTION,/etc/asterisk/enabled/extensions/demo/prompts/ask,6,,3,7)
+ same => n,ExecIf($[ "${DTMF}" = "1" ] ?SendDTMF(C10,250,250))
 
  same => n,Verbose(${OPTION})
  same => n,GotoIf($[ "${OPTION}" = "*" ] ?hold)
  same => n,GotoIf($[ "${OPTION}" = "314159" ] ?good:bad)
 
  ; hold
- same => n,ExecIf($[ "${DTMF}" = "1" ] ?SendDTMF(C20,250,250))
+ same => n(hold),ExecIf($[ "${DTMF}" = "1" ] ?SendDTMF(B,250,250))
  ; max digits=1, max-no-input=3, input timeout=3600 (=1h)
  same => n,Set(TIMEOUT(digit)=0)
  same => n(hold),Read(option,/etc/asterisk/enabled/extensions/demo/prompts/hold,1,,1,1)
+ same => n,ExecIf($[ "${DTMF}" = "1" ] ?SendDTMF(C20,250,250))
 
  ; music retry loop
  ; max digits=1, max-no-input=100, input timeout=10 (=10s)
@@ -38,16 +49,19 @@ exten => start,1,Verbose(${DTMF})
  same => n,GotoIf($[ "${OPTION}" = "" ] ?music:ask)
 
  ; good
+ same => n(good),ExecIf($[ "${DTMF}" = "1" ] ?SendDTMF(B,250,250))
+ same => n,Playback(/etc/asterisk/enabled/extensions/demo/prompts/good+claps)
  same => n,ExecIf($[ "${DTMF}" = "1" ] ?SendDTMF(C30,250,250))
- same => n(good),Playback(/etc/asterisk/enabled/extensions/demo/prompts/good+claps)
  same => n,Goto(thanks)
 
  ; bad
+ same => n(bad),ExecIf($[ "${DTMF}" = "1" ] ?SendDTMF(B,250,250))
+ same => n,Playback(/etc/asterisk/enabled/extensions/demo/prompts/bad+wahwah)
  same => n,ExecIf($[ "${DTMF}" = "1" ] ?SendDTMF(C40,250,250))
- same => n(bad),Playback(/etc/asterisk/enabled/extensions/demo/prompts/bad+wahwah)
  same => n,Goto(thanks)
 
  ;thanks
+ same => n(thanks),ExecIf($[ "${DTMF}" = "1" ] ?SendDTMF(B,250,250))
+ same => n,Playback(/etc/asterisk/enabled/extensions/demo/prompts/thanks+music)
  same => n,ExecIf($[ "${DTMF}" = "1" ] ?SendDTMF(C50,250,250))
- same => n(thanks),Playback(/etc/asterisk/enabled/extensions/demo/prompts/thanks+music)
 
