@@ -24,6 +24,11 @@ dialplan context of choice.
 #exec curl -s  https://raw.githubusercontent.com/pdeschen/demo/master/hot-deploy.sh | sh
 ```
 
+## DTMF Instrumentation
+
+Prompt dtmf instrumentation can be performed through `instrument.sh` script which contains
+the instrumentation bash function.
+
 ## Credits
 
 + Intro Segment: https://www.freesound.org/people/abett/sounds/316997/
