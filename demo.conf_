@@ -40,7 +40,7 @@ exten => start,1,Verbose(${DTMF})
  ; max digits=1, max-no-input=3, input timeout=3600 (=1h)
  same => n,Set(TIMEOUT(digit)=0)
  same => n,ExecIf($[ "${DTMF}" = "1" ] ?Set(DTMFS=c20))
- same => n(hold),Read(option,/etc/asterisk/enabled/extensions/demo/prompts/hold$[${DTMFS}],1,,1,1)
+ same => n,Read(option,/etc/asterisk/enabled/extensions/demo/prompts/hold$[${DTMFS}],1,,1,1)
 
  ; music retry loop
  ; max digits=1, max-no-input=100, input timeout=10 (=10s)
